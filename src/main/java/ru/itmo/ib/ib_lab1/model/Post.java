@@ -1,14 +1,17 @@
 package ru.itmo.ib.ib_lab1.model;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Data
+@Setter
+@Getter
 @Entity
 @NoArgsConstructor
 @Table(name = "posts")
@@ -32,6 +35,9 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @SuppressFBWarnings(
+            value = {"EI_EXPOSE_REP", "EI_EXPOSE_REP2"},
+            justification = "User entity is a JPA managed association and is intentionally exposed for ORM mapping")
     private User author;
 
     public Post(String title, String content, User author) {

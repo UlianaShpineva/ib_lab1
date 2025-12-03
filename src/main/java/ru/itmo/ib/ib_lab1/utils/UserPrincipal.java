@@ -5,10 +5,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.itmo.ib.ib_lab1.model.User;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 
-public class UserPrincipal implements UserDetails {
+public class UserPrincipal implements UserDetails, Serializable {
+    private static final long serialVersionUID = 1L;
     private Long id;
     private String username;
     private String password;

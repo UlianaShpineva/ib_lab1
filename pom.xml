@@ -107,6 +107,13 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- Аннотации SpotBugs для явного подавления ложных срабатываний при необходимости -->
+        <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-annotations</artifactId>
+            <version>4.8.6</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.owasp.encoder</groupId>
             <artifactId>encoder</artifactId>
@@ -212,6 +219,8 @@
                     <format>ALL</format>
                     <!-- Не анализировать зависимости только с scope=provided (например, Lombok) -->
                     <skipProvidedScope>true</skipProvidedScope>
+                    <!-- Не валить сборку, если NVD недоступен или произошла ошибка обновления БД уязвимостей -->
+                    <failOnError>false</failOnError>
                 </configuration>
                 <executions>
                     <execution>

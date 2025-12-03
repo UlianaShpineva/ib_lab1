@@ -26,10 +26,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
-        AuthTokenFilter filter = new AuthTokenFilter();
-        filter.setJwtUtils(jwtUtils);
-        filter.setUserDetailsService(userDetailsService);
-        return filter;
+        return new AuthTokenFilter(jwtUtils, userDetailsService);
     }
 
     @Bean
