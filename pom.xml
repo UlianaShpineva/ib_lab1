@@ -143,6 +143,28 @@
 
     <build>
         <plugins>
+            <!-- Компиляция с поддержкой Lombok (annotation processing) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.34</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -154,6 +176,50 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+
+            <!-- SAST: SpotBugs (Static Application Security Testing) -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.8.6.0</version>
+                <configuration>
+                    <!-- Максимальный уровень анализа и низкий порог для выявления потенциальных проблем безопасности -->
+                    <effort>Max</effort>
+                    <threshold>Low</threshold>
+                    <!-- Если найдены ошибки высокого уровня, сборка упадет -->
+                    <failOnError>true</failOnError>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- SCA: OWASP Dependency-Check (анализ зависимостей на уязвимости) -->
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>9.2.0</version>
+                <configuration>
+                    <!-- Порог CVSS, выше которого сборка будет падать -->
+                    <failBuildOnCVSS>7.0</failBuildOnCVSS>
+                    <!-- Формат отчетов: HTML, XML, JSON и т.д. -->
+                    <format>ALL</format>
+                    <!-- Не анализировать зависимости только с scope=provided (например, Lombok) -->
+                    <skipProvidedScope>true</skipProvidedScope>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

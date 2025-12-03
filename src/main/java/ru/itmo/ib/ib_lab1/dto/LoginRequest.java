@@ -1,11 +1,9 @@
 package ru.itmo.ib.ib_lab1.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class LoginRequest {
     @NotBlank
     private String username;

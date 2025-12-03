@@ -2,11 +2,9 @@ package ru.itmo.ib.ib_lab1.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class CreatePostRequest {
     @NotBlank
     @Size(min = 1, max = 255)
