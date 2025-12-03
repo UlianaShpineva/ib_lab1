@@ -35,6 +35,12 @@ jobs:
 
       - name: Run OWASP Dependency-Check (SCA)
         uses: dependency-check/DependencyCheck_Action@main
+        env:
+          # Внутри Docker-образа dependency-check JDK установлен по пути /opt/jdk.
+          # Переопределяем JAVA_HOME, чтобы не использовать путь с раннера
+          # (/opt/hostedtoolcache/...), которого в контейнере нет.
+          JAVA_HOME: /opt/jdk
+          JAVA_HOME_17_X64: /opt/jdk
         with:
           project: information_security_lab1
           path: .
