@@ -35,11 +35,6 @@ jobs:
 
       - name: Run OWASP Dependency-Check (SCA)
         uses: dependency-check/DependencyCheck_Action@main
-        env:
-          # Сбрасываем JAVA_HOME из раннера, чтобы внутри контейнера dependency-check
-          # не пытаться использовать несуществующий путь /opt/hostedtoolcache/...
-          JAVA_HOME: ''
-          JAVA_HOME_17_X64: ''
         with:
           project: information_security_lab1
           path: .
