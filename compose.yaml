@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres:15
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    command: [ "postgres", "-c", "fsync=off" ]
+    environment:
+      POSTGRES_DB: ib-db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_HOST_AUTH_METHOD: trust
